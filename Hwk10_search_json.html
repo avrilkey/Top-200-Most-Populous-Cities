@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        function runjQuery() {
+
+            //read input to search
+            var inputSearch =$("#searchTxtBx").val();
+
+            $.ajax(
+                {
+                    //setup the paramters
+                    url:    "Hwk10_search_json.php",
+                    data:   "searchKey=" + inputSearch,
+                    success: function (serverdata) 
+                    {
+                        $("#showselect").html(serverdata);
+                    }
+
+
+                });
+        }// dn of runjuery function
+
+        function showinfo() {
+
+            //read selected option
+            var optionValue = $("#nameList").val();
+            //optionValue is a string with values seperatd by commas
+            //Use split function to seperate them
+            //this results in an array
+
+            var name = optionValue.split(",")[0];
+            var state = optionValue.split(",")[1];
+            var pop2022 = optionValue.split(",")[2];
+
+            //population number format
+            var nf = Intl.NumberFormat()
+
+            //display above values at placeholder
+            $("#showoutput").html("Name: " + name + "<br/>" +
+                "State: " + state + "<br/>" +
+                "Population 2022: " + nf.format(pop2022) 
+            );
+
+        }
+    </script>
+</head>
+
+<body onload="runjQuery() ">
+    <h2>Top 200 Most Populous US Cities</h2>
+    <p></p>
+    <input type="text" id="searchTxtBx" autofocus placeholder="Search"
+      onkeyup="runjQuery()" />
+    <p></p>
+    <div id="showselect"></div>
+    <p></p>
+    <div id="showoutput"></div>
+</body>
+
+</html>
